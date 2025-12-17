@@ -55,5 +55,27 @@ Data: 17/12/2025
   
   Prenotare test drive
 
-    Aggiornato indice e analisi requisiti
-    aggiunto vincoli
+  DIAGRAMMA ER AGGIUNTO NEL FILE "diagramma_er.md".
+
+  *Schema Logico Relazionale
+
+  MODELLO_PORSCHE(id_modello PK, nome, motorizzazione)
+  
+  VEICOLO_PORSCHE(id_veicolo PK, telaio, anno, prezzo, stato, id_modello FK)
+  
+  CLIENTE(id_cliente PK, nome, cognome, telefono, email)
+  
+  VENDITORE(id_venditore PK, nome, cognome, provvigione)
+  
+  PREVENTIVO(id_preventivo PK, data, prezzo_proposto, id_cliente FK, id_veicolo FK)
+  
+  CONTRATTO(id_contratto PK, data_vendita, prezzo_finale, id_cliente FK, id_veicolo FK UNIQUE, id_venditore FK)
+  
+  TEST_DRIVE(id_test_drive PK, data, id_cliente FK, id_veicolo FK)
+  
+  APPUNTAMENTO_OFFICINA(id_appuntamento PK, data, id_veicolo FK, note)
+  
+  MAGAZZINO_RICAMBI(id_ricambio PK, nome, quantita, id_veicolo FK)
+
+    
+    aggiunto Schema Logico Relazionale
