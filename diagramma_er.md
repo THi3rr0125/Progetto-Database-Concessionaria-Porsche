@@ -15,6 +15,8 @@ VEICOLO_PORSCHE ||--o{ APPUNTAMENTO_OFFICINA : ha
 VEICOLO_PORSCHE ||--o{ MAGAZZINO_RICAMBI : richiede
 APPUNTAMENTO_OFFICINA ||--o{ MAGAZZINO_RICAMBI : utilizza
 
-    Aggiornato codice diagramma ER
+Spiegazione: Il diagramma ER mostra tutte le entità principali della concessionaria Porsche e le loro relazioni. Non è stata creata una tabella MARCA separata perché tutti i veicoli sono Porsche.
+
+    Aggiunta spiegazione diagramma
 
     
