@@ -164,7 +164,7 @@ INSERT INTO preventivo VALUES
 (1, '2025-01-10', 118000, 'In attesa', 1, 1),
 (2, '2025-01-15', 94000, 'Accettato', 2, 2),
 (3, '2025-01-18', 108000, 'Rifiutato', 3, 3),
-(4, '2025-01-20', 74000, 'In attesa', 4, 4),
+(4, '2025-01-20', 1500000, 'In attesa', 4, 4),
 (5, '2025-01-22', 148000, 'Accettato', 5, 5);
 
 /* CONTRATTO */
@@ -200,3 +200,5 @@ INSERT INTO magazzino_ricambi VALUES
 (5, 'Batteria', 20, 120);
 
 COMMIT;
+
+ corretto errore nei dati test
