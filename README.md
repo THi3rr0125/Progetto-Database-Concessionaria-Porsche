@@ -108,17 +108,15 @@ erDiagram
       string stato
       int id_cliente FK
       int id_veicolo FK
+      **int id_venditore FK**
   }
 
 
   CONTRATTO {
-      int id_contratto PK
+      int id_preventivo PK FK
       date data_vendita
       float importo_finale
       boolean finanziamento
-      int id_cliente FK
-      int id_veicolo FK
-      int id_venditore FK
   }
 
 
@@ -139,7 +137,7 @@ erDiagram
   }
 
 
-  MAGAZZINO_RICAMBI {
+  RICAMBI {
       int id_ricambio PK
       string nome
       int quantita
@@ -147,16 +145,14 @@ erDiagram
   }
 
 
-  MODELLO_PORSCHE ||--o{ VEICOLO_PORSCHE : comprende
-  CLIENTE ||--o{ PREVENTIVO : richiede
-  VEICOLO_PORSCHE ||--o{ PREVENTIVO : riguarda
-  CLIENTE ||--o{ CONTRATTO : firma
-  VEICOLO_PORSCHE ||--|| CONTRATTO : venduto
-  VENDITORE ||--o{ CONTRATTO : gestisce
-  CLIENTE ||--o{ TEST_DRIVE : prenota
-  VEICOLO_PORSCHE ||--o{ TEST_DRIVE : usato
-  VEICOLO_PORSCHE ||--o{ APPUNTAMENTO_OFFICINA : ha
-  APPUNTAMENTO_OFFICINA ||--o{ MAGAZZINO_RICAMBI : utilizza
+  MODELLO_PORSCHE }o--|| VEICOLO_PORSCHE : comprende
+  CLIENTE }o--|| PREVENTIVO : richiede
+  VEICOLO_PORSCHE }o--|| PREVENTIVO : riguarda
+  VENDITORE }o--|| CONTRATTO : gestisce
+  CLIENTE }o--|| TEST_DRIVE : prenota
+  VEICOLO_PORSCHE }o--|| TEST_DRIVE : usato
+  VEICOLO_PORSCHE }o--|| APPUNTAMENTO_OFFICINA : ha
+  APPUNTAMENTO_OFFICINA }o--|| RICAMBI : utilizza
   
 ```
 
