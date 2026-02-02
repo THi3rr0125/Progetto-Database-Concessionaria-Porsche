@@ -1,0 +1,14 @@
+PROGETTAZIONE SITO CONCESSIONARIOA PORSCHE
+NOME:
+
+Zona pubblica:
+  Home:
+    -Storia
+    -descrizione
+    -contatti(infondo alla pagina)
+    -mappa con indirizzo
+    -
+  
+
+Zona Privata(login-cliente/Operatore):
+
