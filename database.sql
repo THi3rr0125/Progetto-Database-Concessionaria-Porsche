@@ -1,11 +1,11 @@
 /* Grange Thierry Classe 5C IT */
 
 
-DROP DATABASE IF EXISTS `concssionario_porsche`;
+DROP DATABASE IF EXISTS `concessionario_porsche`;
 
 
-CREATE DATABASE `concssionario_porsche`;
-USE `concssionario_porsche`;
+CREATE DATABASE `concessionario_porsche`;
+USE `concessionario_porsche`;
 
 /* MODELLO_PORSCHE */
 CREATE TABLE modello_porsche (
