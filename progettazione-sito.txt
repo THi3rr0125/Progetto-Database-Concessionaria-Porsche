@@ -7,8 +7,57 @@ Zona pubblica:
     -descrizione
     -contatti(infondo alla pagina)
     -mappa con indirizzo
-    -
+  Menu a tendina:
+    acquista:
+      usato o nuovo?
+        nuovo:
+          -scegli modello (immagini e descrizione)
+            -configurazione del modello scelto(immagine, colori, descrizione, scheda tecnica)
+            -tasto ordina (resoconto dell ordine e tasto (prenota il tuo appuntamento in filiale per il test drive o per il preventivo))
+              Zona Privata(login-cliente):
+              -prenota test drive(pagina con orari e macchine disponibili)
+              -scarica il tuo preventivo(tasto che scarica il pdf autogenerato del preentivo)
+        usato:
+          -scegli fra modlelli disponibili(immagini descrizione, kilometraggio)
+            -tasto contatta concessionaria (resoconto dell ordine e tasto (prenota il tuo appuntamento in filiale per il test drive))
+              Zona Privata(login-cliente):
+              -prenota test drive(pagina con orari e macchine disponibili)
+              -scarica il tuo preventivo(tasto che scarica il pdf autogenerato del preentivo)
+Zona Privata(login-cliente):
+  customer Service
+    -FORM(inserisci i dati della tua auto e la descrizione del problema riscontrato)
+      -prenota appuntamento in officina(servixzio carro attrezzi?,data e giorno disponibili)
+
+
+
+
   
 
-Zona Privata(login-cliente/Operatore):
+Zona Privata(Operatore):
 
+   Home:
+    -Storia
+    -descrizione
+    -contatti(infondo alla pagina)
+    -mappa con indirizzo
+  Menu a tendina:
+    vedi appuntamenti test drive con dettagli: usato o nuovo?
+    vedi preventivi
+    visualizza/aggiungi contratti
+    visualizza appuntamenti test drive:esito positivo negativo?
+
+    acquista:
+      AGGIUNGI VEICOLO:usato o nuovo?
+        nuovo:
+          AGGIUNGI VEICOLO:
+          -aggiungi modello (immagini e descrizione)
+            -configurazione del modello scelto(immagine,  descrizione, scheda tecnica)
+           
+        usato:
+          AGGIUNGI VEICOLO:
+        -aggiungi modlelli disponibili(immagini descrizione, kilometraggio=)
+
+              Zona Privata(login-cliente):
+              -vedi appuntamenti test drive con dettagli
+  customer Service
+    -vedi appuntamenti officina con dettagli
