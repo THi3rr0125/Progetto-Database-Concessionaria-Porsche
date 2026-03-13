@@ -65,95 +65,92 @@ date: "18/12/2025"
 
 erDiagram
 
+    MODELLO_PORSCHE {
+        INT id_modello PK
+        VARCHAR nome
+        INT anno_produzione
+        VARCHAR motorizzazione
+    }
 
-  MODELLO_PORSCHE {
-      int id_modello PK
-      string nome
-      int anno_produzione
-      string motorizzazione
-  }
+    VEICOLO_PORSCHE {
+        INT id_veicolo PK
+        VARCHAR telaio UK
+        VARCHAR stato
+        FLOAT prezzo
+        BOOLEAN usato
+        INT id_modello FK
+    }
 
+    CLIENTE {
+        INT id_cliente PK
+        VARCHAR nome
+        VARCHAR cognome
+        VARCHAR telefono UK
+        VARCHAR email UK
+    }
 
-  VEICOLO_PORSCHE {
-      int id_veicolo PK
-      string telaio
-      string stato
-      float prezzo
-      boolean usato
-      int id_modello FK
-  }
+    VENDITORE {
+        INT id_venditore PK
+        VARCHAR nome
+        VARCHAR cognome
+        FLOAT percentuale_provvigione
+    }
 
+    PREVENTIVO {
+        INT id_preventivo PK
+        DATE data
+        FLOAT prezzo_proposto
+        VARCHAR stato
+        INT id_cliente FK
+        INT id_veicolo FK
+    }
 
-  CLIENTE {
-      int id_cliente PK
-      string nome
-      string cognome
-      string telefono
-      string email
-  }
+    CONTRATTO {
+        INT id_contratto PK
+        DATE data_vendita
+        FLOAT importo_finale
+        BOOLEAN finanziamento
+        INT id_cliente FK
+        INT id_veicolo FK
+        INT id_venditore FK
+    }
 
+    TEST_DRIVE {
+        INT id_test_drive PK
+        DATE data
+        VARCHAR esito
+        INT id_cliente FK
+        INT id_veicolo FK
+    }
 
-  VENDITORE {
-      int id_venditore PK
-      string nome
-      string cognome
-      float percentuale_provvigione
-  }
+    APPUNTAMENTO_OFFICINA {
+        INT id_appuntamento PK
+        DATE data
+        VARCHAR tipo_intervento
+        INT id_veicolo FK
+    }
 
-
-  PREVENTIVO {
-      int id_preventivo PK
-      date data
-      float prezzo_proposto
-      string stato
-      int id_cliente FK
-      int id_veicolo FK
-      **int id_venditore FK**
-  }
-
-
-  CONTRATTO {
-      int id_preventivo PK FK
-      date data_vendita
-      float importo_finale
-      boolean finanziamento
-  }
-
-
-  TEST_DRIVE {
-      int id_test_drive PK
-      date data
-      string esito
-      int id_cliente FK
-      int id_veicolo FK
-  }
-
-
-  APPUNTAMENTO_OFFICINA {
-      int id_appuntamento PK
-      date data
-      string tipo_intervento
-      int id_veicolo FK
-  }
-
-
-  RICAMBI {
-      int id_ricambio PK
-      string nome
-      int quantita
-      float costo
-  }
+    MAGAZZINO_RICAMBI {
+        INT id_ricambio PK
+        VARCHAR nome
+        INT quantita
+        FLOAT costo
+    }
 
 
-  MODELLO_PORSCHE }o--|| VEICOLO_PORSCHE : comprende
-  CLIENTE }o--|| PREVENTIVO : richiede
-  VEICOLO_PORSCHE }o--|| PREVENTIVO : riguarda
-  VENDITORE }o--|| CONTRATTO : gestisce
-  CLIENTE }o--|| TEST_DRIVE : prenota
-  VEICOLO_PORSCHE }o--|| TEST_DRIVE : usato
-  VEICOLO_PORSCHE }o--|| APPUNTAMENTO_OFFICINA : ha
-  APPUNTAMENTO_OFFICINA }o--|| RICAMBI : utilizza
-  
+    MODELLO_PORSCHE ||--o{ VEICOLO_PORSCHE : "ha"
+
+    VEICOLO_PORSCHE ||--o{ PREVENTIVO : "riguarda"
+    CLIENTE ||--o{ PREVENTIVO : "richiede"
+
+    CLIENTE ||--o{ CONTRATTO : "firma"
+    VENDITORE ||--o{ CONTRATTO : "vende"
+    VEICOLO_PORSCHE ||--o{ CONTRATTO : "vendita"
+
+    CLIENTE ||--o{ TEST_DRIVE : "effettua"
+    VEICOLO_PORSCHE ||--o{ TEST_DRIVE : "provato"
+
+    VEICOLO_PORSCHE ||--o{ APPUNTAMENTO_OFFICINA : "manutenzione"
 ```
 
 ### Spiegazione del Diagramma ER
