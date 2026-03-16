@@ -1,128 +1,174 @@
 /* Grange Thierry Classe 5C IT */
 
+DROP DATABASE IF EXISTS concessionario_porsche;
+CREATE DATABASE concessionario_porsche;
+USE conecssionario_porsche;
 
-DROP DATABASE IF EXISTS `concessionario_porsche`;
 
-
-CREATE DATABASE `concessionario_porsche`;
-USE `concessionario_porsche`;
-
-/* MODELLO_PORSCHE */
+/* =========================
+   MODELLO_PORSCHE
+   ========================= */
 CREATE TABLE modello_porsche (
-  id_modello INT NOT NULL PRIMARY KEY,
+  id_modello INT(2) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
   nome VARCHAR(50) NOT NULL,
-  anno_produzione INT NOT NULL,
-  motorizzazione VARCHAR(50) NOT NULL
+  anno_produzione YEAR NOT NULL,
+  alimentazione ENUM('Diesel','Benzina','Hybrid','Elettrica') NOT NULL,
+  kW FLOAT(5,1) UNSIGNED NOT NULL,
+  accellerazione FLOAT(2,1) UNSIGNED NOT NULL,
+  velocita_massima INT(3) UNSIGNED NOT NULL,
+  cilindrata INT(4) UNSIGNED NOT NULL,
+  coppia FLOAT(4,1) UNSIGNED NOT NULL,
+  peso INT(4) UNSIGNED NOT NULL,
+  motorizzazione VARCHAR(10) NOT NULL,
+  numero_posti INT(1) UNSIGNED NOT NULL,
+  numero_porte INT(1) UNSIGNED NOT NULL,
+  numero_cilindri INT(2) UNSIGNED NOT NULL,
+  PRIMARY KEY (id_modello)
 );
 
-/* VEICOLO_PORSCHE */
+/* =========================
+   VEICOLO_PORSCHE
+   ========================= */
 CREATE TABLE veicolo_porsche (
-  id_veicolo INT NOT NULL PRIMARY KEY,
-  telaio VARCHAR(50) NOT NULL UNIQUE,
-  stato VARCHAR(20) NOT NULL,
-  prezzo FLOAT NOT NULL,
-  usato BOOLEAN NOT NULL DEFAULT FALSE,
-  id_modello INT NOT NULL,
+  targa VARCHAR(10) NOT NULL, --7
+  telaio VARCHAR(32) NOT NULL UNIQUE,
+  prezzo FLOAT(8,2) NOT NULL,
+  usato BOOLEAN NOT NULL DEFAULT FALSE,-- km usato
+  colore ENUM('Nero','Bianco','Rosso','Blu','Grigio') NOT NULL,-- ev. tabella colori con nome e rgb
+  id_modello INT(2) UNSIGNED ZEROFILL NOT NULL,
+  PRIMARY KEY (targa),
   CONSTRAINT fk_veicolo_modello
-    FOREIGN KEY (id_modello) REFERENCES modello_porsche(id_modello)
-      ON DELETE RESTRICT
-      ON UPDATE CASCADE
+    FOREIGN KEY (id_modello)
+    REFERENCES modello_porsche(id_modello)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE
 );
 
-/* CLIENTE */
+/* =========================
+   CLIENTE
+   ========================= */
 CREATE TABLE cliente (
-  id_cliente INT NOT NULL PRIMARY KEY,
+  id_cliente INT(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
   nome VARCHAR(30) NOT NULL,
   cognome VARCHAR(30) NOT NULL,
   telefono VARCHAR(20) UNIQUE NOT NULL,
-  email VARCHAR(50) UNIQUE NOT NULL
+  email VARCHAR(50) UNIQUE NOT NULL,
+  PRIMARY KEY (id_cliente)
 );
 
-/* VENDITORE */
+/* =========================
+   VENDITORE
+   ========================= */
 CREATE TABLE venditore (
-  id_venditore INT NOT NULL PRIMARY KEY,
+  id_venditore INT NOT NULL,
   nome VARCHAR(30) NOT NULL,
   cognome VARCHAR(30) NOT NULL,
-  percentuale_provvigione FLOAT NOT NULL
+  percentuale_provvigione FLOAT(3,1) NOT NULL,
+  PRIMARY KEY (id_venditore)
 );
 
-/* PREVENTIVO */
+/* =========================
+   PREVENTIVO
+   ========================= */
 CREATE TABLE preventivo (
-  id_preventivo INT NOT NULL PRIMARY KEY,
+  id_preventivo INT(6) NOT NULL,
   data DATE NOT NULL,
-  prezzo_proposto FLOAT NOT NULL,
+  prezzo_proposto FLOAT(8,2) NOT NULL,
   stato VARCHAR(20),
-  id_cliente INT NOT NULL,
-  id_veicolo INT NOT NULL,
+  id_cliente INT(6) UNSIGNED ZEROFILL NOT NULL,
+  targa VARCHAR(10) NOT NULL,
+  PRIMARY KEY (id_preventivo),
   CONSTRAINT fk_preventivo_cliente
     FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente)
-      ON DELETE RESTRICT
-      ON UPDATE CASCADE,
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE,
   CONSTRAINT fk_preventivo_veicolo
-    FOREIGN KEY (id_veicolo) REFERENCES veicolo_porsche(id_veicolo)
-      ON DELETE RESTRICT
-      ON UPDATE CASCADE
+    FOREIGN KEY (targa) REFERENCES veicolo_porsche(targa)
+    ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-/* CONTRATTO */
+/* =========================
+   CONTRATTO
+   ========================= */
 CREATE TABLE contratto (
-  id_contratto INT NOT NULL PRIMARY KEY,
+  id_contratto INT NOT NULL,
   data_vendita DATE NOT NULL,
   importo_finale FLOAT NOT NULL,
   finanziamento BOOLEAN NOT NULL DEFAULT FALSE,
-  id_cliente INT NOT NULL,
-  id_veicolo INT NOT NULL,
+  id_cliente INT(6) UNSIGNED ZEROFILL NOT NULL,
+  targa VARCHAR(10) NOT NULL,
   id_venditore INT NOT NULL,
+  PRIMARY KEY (id_contratto),
   CONSTRAINT fk_contratto_cliente
     FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente)
-      ON DELETE RESTRICT
-      ON UPDATE CASCADE,
+    ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT fk_contratto_veicolo
-    FOREIGN KEY (id_veicolo) REFERENCES veicolo_porsche(id_veicolo)
-      ON DELETE RESTRICT
-      ON UPDATE CASCADE,
+    FOREIGN KEY (targa) REFERENCES veicolo_porsche(targa)
+    ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT fk_contratto_venditore
     FOREIGN KEY (id_venditore) REFERENCES venditore(id_venditore)
-      ON DELETE RESTRICT
-      ON UPDATE CASCADE
+    ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-/* TEST_DRIVE */
+/* =========================
+   TEST_DRIVE
+   ========================= */
 CREATE TABLE test_drive (
-  id_test_drive INT NOT NULL PRIMARY KEY,
+  id_test_drive INT NOT NULL,
   data DATE NOT NULL,
   esito VARCHAR(20),
-  id_cliente INT NOT NULL,
-  id_veicolo INT NOT NULL,
+  id_cliente INT(6) UNSIGNED ZEROFILL NOT NULL,
+  targa VARCHAR(10) NOT NULL,
+  PRIMARY KEY (id_test_drive),
   CONSTRAINT fk_testdrive_cliente
     FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente)
-      ON DELETE RESTRICT
-      ON UPDATE CASCADE,
+    ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT fk_testdrive_veicolo
-    FOREIGN KEY (id_veicolo) REFERENCES veicolo_porsche(id_veicolo)
-      ON DELETE RESTRICT
-      ON UPDATE CASCADE
+    FOREIGN KEY (targa) REFERENCES veicolo_porsche(targa)
+    ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-/* APPUNTAMENTO_OFFICINA */
+/* =========================
+   APPUNTAMENTO_OFFICINA
+   ========================= */
 CREATE TABLE appuntamento_officina (
-  id_appuntamento INT NOT NULL PRIMARY KEY,
+  id_appuntamento INT NOT NULL,
   data DATE NOT NULL,
   tipo_intervento VARCHAR(50) NOT NULL,
-  id_veicolo INT NOT NULL,
+  targa VARCHAR(10) NOT NULL,
+  PRIMARY KEY (id_appuntamento),
   CONSTRAINT fk_appuntamento_veicolo
-    FOREIGN KEY (id_veicolo) REFERENCES veicolo_porsche(id_veicolo)
-      ON DELETE RESTRICT
-      ON UPDATE CASCADE
+    FOREIGN KEY (targa) REFERENCES veicolo_porsche(targa)
+    ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-/* MAGAZZINO_RICAMBI*/
+/* =========================
+   MAGAZZINO_RICAMBI
+   ========================= */
 CREATE TABLE magazzino_ricambi (
-  id_ricambio INT NOT NULL PRIMARY KEY,
+  id_ricambio INT NOT NULL,
   nome VARCHAR(50) NOT NULL,
   quantita INT NOT NULL,
-  costo FLOAT NOT NULL
+  costo FLOAT NOT NULL,
+  PRIMARY KEY (id_ricambio)
 );
+
+/* =========================
+   IMMAGINI
+   ========================= */
+CREATE TABLE immagini (
+  cod_foto INT(4) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+  targa VARCHAR(10) NOT NULL,
+  numero_foto INT(2) UNSIGNED NOT NULL,
+  estensione VARCHAR(5) NOT NULL,
+  PRIMARY KEY (cod_foto),
+  CONSTRAINT fk_immagini_veicolo
+    FOREIGN KEY (targa) REFERENCES veicolo_porsche(targa)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE
+);
+
+
 
 /*test*/
 
