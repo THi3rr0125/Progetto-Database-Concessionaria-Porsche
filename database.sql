@@ -44,27 +44,37 @@ CREATE TABLE veicolo_porsche (
     ON UPDATE CASCADE
 );
 
+CREATE TABLE utente (
+   id_utente INT(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   nome VARCHAR(30) NOT NULL,
+   cognome VARCHAR(30) NOT NULL,
+   telefono VARCHAR(20) UNIQUE NOT NULL,
+   email VARCHAR(50) UNIQUE NOT NULL,
+   password varchar(64) NOT NULL,             
+   salt varchar(64) NOT NULL
+);
+
 /* =========================
    CLIENTE
    ========================= */
 CREATE TABLE cliente (
-  id_cliente INT(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
-  nome VARCHAR(30) NOT NULL,
-  cognome VARCHAR(30) NOT NULL,
-  telefono VARCHAR(20) UNIQUE NOT NULL,
-  email VARCHAR(50) UNIQUE NOT NULL,
-  PRIMARY KEY (id_cliente)
+  id_cliente INT(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   CONSTRAINT fk_utente
+    FOREIGN KEY (id_cliente) REFERENCES utente(id_utente)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
 
 /* =========================
    VENDITORE
    ========================= */
 CREATE TABLE venditore (
-  id_venditore INT NOT NULL,
-  nome VARCHAR(30) NOT NULL,
-  cognome VARCHAR(30) NOT NULL,
+  id_venditore INT(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT PRIMARY KEY,
   percentuale_provvigione FLOAT(3,1) NOT NULL,
-  PRIMARY KEY (id_venditore)
+   CONSTRAINT fk_utente
+    FOREIGN KEY (id_cliente) REFERENCES utente(id_utente)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
 
 /* =========================
