@@ -1,6 +1,6 @@
 /* Grange Thierry Classe 5C IT */
 
-/* Grange Thierry Classe 5C IT */
+
 
 DROP DATABASE IF EXISTS concessionario_porsche;
 CREATE DATABASE concessionario_porsche;
