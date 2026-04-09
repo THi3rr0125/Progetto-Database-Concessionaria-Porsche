@@ -1,8 +1,10 @@
 /* Grange Thierry Classe 5C IT */
 
+/* Grange Thierry Classe 5C IT */
+
 DROP DATABASE IF EXISTS concessionario_porsche;
 CREATE DATABASE concessionario_porsche;
-USE conecssionario_porsche;
+USE concessionario_porsche;
 
 
 /* =========================
@@ -26,15 +28,16 @@ CREATE TABLE modello_porsche (
   PRIMARY KEY (id_modello)
 );
 
+
 /* =========================
    VEICOLO_PORSCHE
    ========================= */
 CREATE TABLE veicolo_porsche (
-  targa VARCHAR(10) NOT NULL, --7
+  targa VARCHAR(10) NOT NULL,
   telaio VARCHAR(32) NOT NULL UNIQUE,
   prezzo FLOAT(8,2) NOT NULL,
-  usato BOOLEAN NOT NULL DEFAULT FALSE,-- km usato
-  colore ENUM('Nero','Bianco','Rosso','Blu','Grigio') NOT NULL,-- ev. tabella colori con nome e rgb
+  usato BOOLEAN NOT NULL DEFAULT FALSE,
+  colore ENUM('Nero','Bianco','Rosso','Blu','Grigio') NOT NULL,
   id_modello INT(2) UNSIGNED ZEROFILL NOT NULL,
   PRIMARY KEY (targa),
   CONSTRAINT fk_veicolo_modello
@@ -44,26 +47,32 @@ CREATE TABLE veicolo_porsche (
     ON UPDATE CASCADE
 );
 
+
+/* =========================
+   UTENTE
+   ========================= */
 CREATE TABLE utente (
    id_utente INT(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT PRIMARY KEY,
    nome VARCHAR(30) NOT NULL,
    cognome VARCHAR(30) NOT NULL,
    telefono VARCHAR(20) UNIQUE NOT NULL,
    email VARCHAR(50) UNIQUE NOT NULL,
-   password varchar(64) NOT NULL,             
-   salt varchar(64) NOT NULL
+   password VARCHAR(64) NOT NULL,             
+   salt VARCHAR(64) NOT NULL
 );
+
 
 /* =========================
    CLIENTE
    ========================= */
 CREATE TABLE cliente (
   id_cliente INT(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT PRIMARY KEY,
-   CONSTRAINT fk_utente
+  CONSTRAINT fk_cliente_utente
     FOREIGN KEY (id_cliente) REFERENCES utente(id_utente)
     ON DELETE CASCADE
     ON UPDATE CASCADE
 );
+
 
 /* =========================
    VENDITORE
@@ -71,11 +80,12 @@ CREATE TABLE cliente (
 CREATE TABLE venditore (
   id_venditore INT(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT PRIMARY KEY,
   percentuale_provvigione FLOAT(3,1) NOT NULL,
-   CONSTRAINT fk_utente
-    FOREIGN KEY (id_cliente) REFERENCES utente(id_utente)
+  CONSTRAINT fk_venditore_utente
+    FOREIGN KEY (id_venditore) REFERENCES utente(id_utente)
     ON DELETE CASCADE
     ON UPDATE CASCADE
 );
+
 
 /* =========================
    PREVENTIVO
@@ -97,6 +107,7 @@ CREATE TABLE preventivo (
     ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
+
 /* =========================
    CONTRATTO
    ========================= */
@@ -106,7 +117,7 @@ CREATE TABLE contratto (
   importo_finale FLOAT NOT NULL,
   finanziamento BOOLEAN NOT NULL DEFAULT FALSE,
   id_cliente INT(6) UNSIGNED ZEROFILL NOT NULL,
-  targa VARCHAR(10) NOT NULL,
+  targa VARCHAR(10) NOT NULL UNIQUE,
   id_venditore INT NOT NULL,
   PRIMARY KEY (id_contratto),
   CONSTRAINT fk_contratto_cliente
@@ -119,6 +130,7 @@ CREATE TABLE contratto (
     FOREIGN KEY (id_venditore) REFERENCES venditore(id_venditore)
     ON DELETE RESTRICT ON UPDATE CASCADE
 );
+
 
 /* =========================
    TEST_DRIVE
@@ -138,6 +150,7 @@ CREATE TABLE test_drive (
     ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
+
 /* =========================
    APPUNTAMENTO_OFFICINA
    ========================= */
@@ -152,6 +165,7 @@ CREATE TABLE appuntamento_officina (
     ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
+
 /* =========================
    MAGAZZINO_RICAMBI
    ========================= */
@@ -162,6 +176,24 @@ CREATE TABLE magazzino_ricambi (
   costo FLOAT NOT NULL,
   PRIMARY KEY (id_ricambio)
 );
+
+
+/* =========================
+   UTILIZZO_RICAMBI
+   ========================= */
+CREATE TABLE utilizzo_ricambi (
+  id_appuntamento INT NOT NULL,
+  id_ricambio INT NOT NULL,
+  quantita_usata INT NOT NULL,
+  PRIMARY KEY (id_appuntamento, id_ricambio),
+  CONSTRAINT fk_utilizzo_appuntamento
+    FOREIGN KEY (id_appuntamento) REFERENCES appuntamento_officina(id_appuntamento)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT fk_utilizzo_ricambio
+    FOREIGN KEY (id_ricambio) REFERENCES magazzino_ricambi(id_ricambio)
+    ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
 
 /* =========================
    IMMAGINI
@@ -177,7 +209,6 @@ CREATE TABLE immagini (
     ON DELETE RESTRICT
     ON UPDATE CASCADE
 );
-
 
 
 /*test*/
