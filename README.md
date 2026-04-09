@@ -137,20 +137,21 @@ erDiagram
         FLOAT costo
     }
 
+    
 
     MODELLO_PORSCHE ||--o{ VEICOLO_PORSCHE : "ha"
 
-    VEICOLO_PORSCHE ||--o{ PREVENTIVO : "riguarda"
     CLIENTE ||--o{ PREVENTIVO : "richiede"
+    VEICOLO_PORSCHE ||--o{ PREVENTIVO : "è incluso in"
 
     CLIENTE ||--o{ CONTRATTO : "firma"
-    VENDITORE ||--o{ CONTRATTO : "vende"
-    VEICOLO_PORSCHE ||--o{ CONTRATTO : "vendita"
+    VENDITORE ||--o{ CONTRATTO : "gestisce"
+    VEICOLO_PORSCHE ||--|| CONTRATTO : "venduto in"
 
     CLIENTE ||--o{ TEST_DRIVE : "effettua"
-    VEICOLO_PORSCHE ||--o{ TEST_DRIVE : "provato"
+    VEICOLO_PORSCHE ||--o{ TEST_DRIVE : "viene provato"
 
-    VEICOLO_PORSCHE ||--o{ APPUNTAMENTO_OFFICINA : "manutenzione"
+    VEICOLO_PORSCHE ||--o{ APPUNTAMENTO_OFFICINA : "ha"
 ```
 
 ### Spiegazione del Diagramma ER
