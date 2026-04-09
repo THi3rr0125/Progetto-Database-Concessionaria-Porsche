@@ -137,7 +137,13 @@ erDiagram
         FLOAT costo
     }
 
-    
+    UTILIZZO_RICAMBI {
+        INT id_appuntamento FK
+        INT id_ricambio FK
+        INT quantita_usata
+    }
+
+    %% RELAZIONI
 
     MODELLO_PORSCHE ||--o{ VEICOLO_PORSCHE : "ha"
 
@@ -152,6 +158,9 @@ erDiagram
     VEICOLO_PORSCHE ||--o{ TEST_DRIVE : "viene provato"
 
     VEICOLO_PORSCHE ||--o{ APPUNTAMENTO_OFFICINA : "ha"
+
+    APPUNTAMENTO_OFFICINA ||--o{ UTILIZZO_RICAMBI : "usa"
+    MAGAZZINO_RICAMBI ||--o{ UTILIZZO_RICAMBI : "impiegato in"
 ```
 
 ### Spiegazione del Diagramma ER
