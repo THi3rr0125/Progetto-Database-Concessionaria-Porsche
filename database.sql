@@ -118,7 +118,7 @@ CREATE TABLE contratto (
   finanziamento BOOLEAN NOT NULL DEFAULT FALSE,
   id_cliente INT(6) UNSIGNED ZEROFILL NOT NULL,
   targa VARCHAR(10) NOT NULL UNIQUE,
-  id_venditore INT NOT NULL,
+  id_venditore INT(6) UNSIGNED ZEROFILL NOT NULL, /* <-- CORREZIONE EFFETTUATA QUI */
   PRIMARY KEY (id_contratto),
   CONSTRAINT fk_contratto_cliente
     FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente)
@@ -213,6 +213,7 @@ CREATE TABLE immagini (
 
 /*test*/
 
+
 /* MODELLO_PORSCHE */
 INSERT INTO modello_porsche VALUES
 (1, '911 Carrera', 2023, 'Benzina'),
@@ -221,6 +222,7 @@ INSERT INTO modello_porsche VALUES
 (4, '918 Spyder', 2013, 'Benzina'),
 (5, 'Taycan', 2023, 'Elettrica');
 
+
 /* VEICOLO_PORSCHE */
 INSERT INTO veicolo_porsche VALUES
 (1, 'TLA91112345', 'Disponibile', 120000, FALSE, 1),
@@ -228,6 +230,7 @@ INSERT INTO veicolo_porsche VALUES
 (3, 'TLPAN33333', 'In vendita', 110000, FALSE, 3),
 (4, 'TL91844444', 'Venduto', 1500000, TRUE, 4),
 (5, 'TLTAY55555', 'Disponibile', 150000, FALSE, 5);
+
 
 /* CLIENTE */
 INSERT INTO cliente VALUES
@@ -238,6 +241,8 @@ INSERT INTO cliente VALUES
 (5, 'Riccardo', 'Bertelli', '3375566778', 'Riccardo.Bertelli@email.com');
 
 
+
+
 /* VENDITORE */
 INSERT INTO venditore VALUES
 (1, 'Matthias', 'Negri', 5),
@@ -245,6 +250,7 @@ INSERT INTO venditore VALUES
 (3, 'Carl', 'Benz', 6),
 (4, 'Mattia', 'Bosco', 3.5),
 (5, 'Lewis', 'Hamilton', 5.5);
+
 
 /* PREVENTIVO */
 INSERT INTO preventivo VALUES
@@ -254,6 +260,7 @@ INSERT INTO preventivo VALUES
 (4, '2025-01-20', 1500000, 'In attesa', 4, 4),
 (5, '2025-01-22', 148000, 'Accettato', 5, 5);
 
+
 /* CONTRATTO */
 INSERT INTO contratto VALUES
 (1, '2025-01-12', 119000, TRUE, 1, 1, 1),
@@ -261,6 +268,7 @@ INSERT INTO contratto VALUES
 (3, '2025-01-19', 109000, TRUE, 3, 3, 3),
 (4, '2025-01-21', 1200000, FALSE, 4, 4, 4),
 (5, '2025-01-23', 149000, TRUE, 5, 5, 5);
+
 
 /* TEST_DRIVE */
 INSERT INTO test_drive VALUES
@@ -270,6 +278,7 @@ INSERT INTO test_drive VALUES
 (4, '2025-01-08', 'Positivo', 4, 4),
 (5, '2025-01-09', 'Negativo', 5, 5);
 
+
 /* APPUNTAMENTO_OFFICINA */
 INSERT INTO appuntamento_officina VALUES
 (1, '2025-02-01', 'Tagliando', 1),
@@ -277,6 +286,7 @@ INSERT INTO appuntamento_officina VALUES
 (3, '2025-02-03', 'Cambio gomme', 3),
 (4, '2025-02-04', 'Manutenzione generale', 4),
 (5, '2025-02-05', 'Elettronica', 5);
+
 
 /* MAGAZZINO_RICAMBI */
 INSERT INTO magazzino_ricambi VALUES
@@ -286,6 +296,9 @@ INSERT INTO magazzino_ricambi VALUES
 (4, 'Olio motore', 200, 10),
 (5, 'Batteria', 20, 120);
 
+
 COMMIT;
 
+
  corretto errore nei dati test
+
